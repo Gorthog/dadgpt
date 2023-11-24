@@ -10,3 +10,9 @@ update your api key in constants.py and then run
 ```fish
 python main.py "your search query"
 ```
+
+create a .env file and add your api key there like this 
+
+```
+OPENAI_API_KEY = "your api key"
+```

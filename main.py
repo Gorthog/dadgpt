@@ -1,11 +1,11 @@
-import os
 import sys
 
-import constants
 from langchain.document_loaders import TextLoader
 from langchain.indexes import VectorstoreIndexCreator
+from dotenv import load_dotenv
 
-os.environ['OPENAI_API_KEY'] = constants.APIKEY
+load_dotenv()
+
 
 query = sys.argv[1]
 print(query)
