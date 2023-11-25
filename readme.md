@@ -16,3 +16,9 @@ create a .env file and add your api key there like this
 ```
 OPENAI_API_KEY = "your api key"
 ```
+
+to enable deployment to cloudrun:
+```fish
+gcloud services enable run.googleapis.com
+gcloud config set compute/region "me-west1"
+```
