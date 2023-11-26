@@ -21,4 +21,11 @@ to enable deployment to cloudrun:
 ```fish
 gcloud services enable run.googleapis.com
 gcloud config set compute/region "me-west1"
+gcloud auth configure-docker
+```
+
+to deploy container:
+```fish
+gcloud builds submit --tag gcr.io/(gcloud config get-value project)/dadgpt
+gcloud run deploy --image gcr.io/(gcloud config get-value project)/dadgpt --allow-unauthenticated --region=(gcloud config get-value compute/region)
 ```
