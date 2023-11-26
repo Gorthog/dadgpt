@@ -15,6 +15,7 @@ create a .env file and add your api key there like this
 
 ```
 OPENAI_API_KEY = "your api key"
+GOOGLE_APPLICATION_CREDENTIALS = "keys/serviceaccount.json"
 ```
 
 to enable deployment to cloudrun:
