@@ -16,7 +16,5 @@ COPY main.py main.py
 
 COPY .env .env
 
-COPY data.txt data.txt
-
 # Set the command to run the application
 CMD [ "python", "main.py" ]
