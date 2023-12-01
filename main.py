@@ -2,12 +2,13 @@ import os
 from langchain.document_loaders import TextLoader
 from langchain.indexes import VectorstoreIndexCreator
 from dotenv import load_dotenv
-from bottle import route, run, request
+from bottle import run, request, post, get
+from google.cloud import storage
 
 load_dotenv()
 
-@route('/')
-def index():
+@get('/')
+def query():
   if "query" in request.params:
     query_param = request.params.get("query")
     save_data_file_from_gcs('dadgpt', 'data.txt')
@@ -18,24 +19,36 @@ def index():
   else:
     return { "error": "query parameter is empty"}
 
-from google.cloud import storage
+
+
+@post('/append')
+def append():
+  if "text" in request.json:
+    text = request.json["text"]
+    append_text_to_file_in_gcs('dadgpt', 'data.txt', text)
+  else:
+    return { "error": "text parameter is empty"}
 
 def save_data_file_from_gcs(bucket_name, blob_name):
-    # Create a client
-    client = storage.Client()
-    # Get the bucket
-    bucket = client.get_bucket(bucket_name)
-    # Get the blob
-    blob = bucket.blob(blob_name)
+  _, existing_data = get_data_from_blob(bucket_name, blob_name)
 
-    # Download the blob to a string
-    data = blob.download_as_text()
+  if os.path.exists('data.txt'):
+      os.remove('data.txt')
 
-    if os.path.exists('data.txt'):
-        os.remove('data.txt')
+  with open('data.txt', 'w') as file:
+    file.write(existing_data)
 
-    with open('data.txt', 'w') as file:
-      file.write(data)
+def append_text_to_file_in_gcs(bucket_name, blob_name, text):
+  blob, existing_data = get_data_from_blob(bucket_name, blob_name)
+  new_data = existing_data + text + '\n'
+  blob.upload_from_string(new_data)
+
+def get_data_from_blob(bucket_name, blob_name):
+  client = storage.Client()
+  bucket = client.get_bucket(bucket_name)
+  blob = bucket.blob(blob_name)
+  existing_data = blob.download_as_text()
+  return blob,existing_data
 
 port = int(os.environ.get('PORT', 3000))
 run(host='0.0.0.0', port=port, debug=True)
