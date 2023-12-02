@@ -40,7 +40,7 @@ def save_data_file_from_gcs(bucket_name, blob_name):
 
 def append_text_to_file_in_gcs(bucket_name, blob_name, text):
   blob, existing_data = get_data_from_blob(bucket_name, blob_name)
-  new_data = existing_data + text + '\n'
+  new_data = existing_data + '\n' + text + '\n'
   blob.upload_from_string(new_data)
 
 def get_data_from_blob(bucket_name, blob_name):
