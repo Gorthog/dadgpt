@@ -25,6 +25,16 @@ gcloud config set compute/region "me-west1"
 gcloud auth configure-docker
 ```
 
+to build docker file:
+```fish
+docker build -t dadgpt .
+```
+
+to run docker file:
+```fish
+docker run -p 3000:3000 dadgpt
+```
+
 to deploy container:
 ```fish
 gcloud builds submit --tag gcr.io/(gcloud config get-value project)/dadgpt
