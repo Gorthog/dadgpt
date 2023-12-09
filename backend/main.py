@@ -16,7 +16,7 @@ def query():
     loader = TextLoader('./data.txt')
     index = VectorstoreIndexCreator().from_loaders([loader])
     result = index.query(query_param, retriever_kwargs={"search_kwargs": {"k": 1}})
-    return { "data": result}
+    return { "data": result.strip() }
   else:
     return { "error": "query parameter is empty"}
 
