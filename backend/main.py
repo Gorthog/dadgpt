@@ -2,8 +2,9 @@ import os
 from langchain.document_loaders import TextLoader
 from langchain.indexes import VectorstoreIndexCreator
 from dotenv import load_dotenv
-from bottle import run, request, post, get
+from bottle import run, request, post, get, app
 from google.cloud import storage
+from bottle_cors_plugin import cors_plugin
 
 load_dotenv()
 
@@ -49,6 +50,9 @@ def get_data_from_blob(bucket_name, blob_name):
   blob = bucket.blob(blob_name)
   existing_data = blob.download_as_text()
   return blob,existing_data
+
+app = app()
+app.install(cors_plugin('*'))
 
 port = int(os.environ.get('PORT', 3000))
 run(host='0.0.0.0', port=port, debug=True)
