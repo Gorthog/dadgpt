@@ -2,7 +2,7 @@ for setup, run the following commands:
 
 ```fish
 python3 -m venv venv
-source venv/bin/activate.fish
+source activate.fish
 pip install -r requirements.txt
 ```
 
