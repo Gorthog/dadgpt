@@ -1,24 +1,26 @@
-import { createSignal } from "solid-js";
+import { createSignal, createResource } from "solid-js";
 
 export function Query() {
-  const [query, setQuery] = createSignal("");
-  const [response, setResponse] = createSignal("");
-  const [isLoading, setIsLoading] = createSignal(false);
+  let refQuery: HTMLInputElement | undefined;
 
-  const handleClick = async (e: Event) => {
+  const [query, setQuery] = createSignal<string>();
+
+  const [response] = createResource(query, async (q) =>
+    (await (await fetch(`https://dadgpt-dbfrvs4mzq-zf.a.run.app?query=${q}`)).json()).data
+  );
+
+
+  const handleClick = (e: Event) => {
     e.preventDefault();
-    setIsLoading(true);
-    const res = await fetch(`https://dadgpt-dbfrvs4mzq-zf.a.run.app?query=${query()}`);
-    const data = await res.json();
-    setResponse(data.data);
-    setIsLoading(false);
+    console.log(refQuery?.value)
+    setQuery(refQuery?.value || "");
   };
 
   return (
     <form onSubmit={handleClick}>
-      <input type="text" value={query()} onInput={(e) => setQuery(e.currentTarget.value)} />
+      <input ref={refQuery} type="text" />
       <button type="submit">Search</button>
-      <div>{isLoading() ? "Loading..." : response()}</div>
+      <div>{response.loading ? "Loading..." : response()}</div>
     </form>
   );
 }
