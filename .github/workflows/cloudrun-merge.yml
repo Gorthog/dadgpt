@@ -24,7 +24,7 @@ jobs:
         run: |
           mkdir -p keys
           echo '${{ secrets.GOOGLE_CREDENTIALS }}' > keys/serviceaccount.json
-      - run: 'gcloud builds submit --tag gcr.io/dadgpt/dadgpt'
+      - run: 'gcloud builds submit --quiet --suppress-logs --tag gcr.io/dadgpt/dadgpt'
       - uses: 'google-github-actions/deploy-cloudrun@v1'
         with:
           image: 'gcr.io/dadgpt/dadgpt'
