@@ -18,7 +18,7 @@ def query():
     result = index.query(query_param, retriever_kwargs={"search_kwargs": {"k": 1}})
     return { "data": result.strip() }
   else:
-    return { "error": "query parameter is empty"}
+    return { "error": "query parameter is empty."}
 
 
 
