@@ -9,7 +9,6 @@ export function Query() {
     (await (await fetch(`https://dadgpt-dbfrvs4mzq-zf.a.run.app?query=${q}`)).json()).data
   );
 
-
   const handleClick = (e: Event) => {
     e.preventDefault();
     console.log(refQuery?.value)
