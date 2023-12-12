@@ -18,7 +18,7 @@ def query():
     result = index.query(query_param, retriever_kwargs={"search_kwargs": {"k": 1}})
     return { "data": result.strip() }
   else:
-    return { "error": "query parameter is empty"}
+    return { "error": "query parameter is empty."}
 
 
 
@@ -28,7 +28,7 @@ def append():
     text = request.json["text"]
     append_text_to_file_in_gcs('dadgpt', 'data.txt', text)
   else:
-    return { "error": "text parameter is empty"}
+    return { "error": "text parameter is empty."}
 
 def save_data_file_from_gcs(bucket_name, blob_name):
   _, existing_data = get_data_from_blob(bucket_name, blob_name)
