@@ -25,3 +25,5 @@ jobs:
         with:
           image: 'gcr.io/dadgpt/dadgpt'
           service: 'dadgpt'
+          region: 'me-west1'
+
