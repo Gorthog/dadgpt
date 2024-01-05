@@ -21,7 +21,7 @@ export function Query() {
       <div class={styles.container}>
         <input class={styles.searchInput} ref={refQuery} type="text" style="" />
         <button class={styles.searchButton} type="submit">Search</button>
-        <div class="searchResult" >{response.loading ? "Loading..." : response()}</div>
+        <div class={styles.searchResult} >{response.loading ? "Loading..." : response()}</div>
       </div>
     </form>
   );
