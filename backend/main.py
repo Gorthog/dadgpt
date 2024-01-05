@@ -5,12 +5,17 @@ from dotenv import load_dotenv
 from bottle import run, request, post, get, app
 from google.cloud import storage
 from bottle_cors_plugin import cors_plugin
+import logging as log
+import google.cloud.logging as logging
 
 load_dotenv()
 
+logging_client = logging.Client()
+logging_client.setup_logging()
+
 @get('/')
 def query():
-  print("Open api key: " + os.environ.get('OPENAI_API_KEY'))
+  log.info(f"Open api key: {os.environ.get('OPENAI_API_KEY')}") 
   if "query" in request.params:
     query_param = request.params.get("query")
     save_data_file_from_gcs('dadgpt', 'data.txt')
