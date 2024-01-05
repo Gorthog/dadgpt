@@ -15,7 +15,7 @@ logging_client.setup_logging()
 
 @get('/')
 def query():
-  log.info(f"Open api key: {os.environ.get('OPENAI_API_KEY')}") 
+  log.info(f"Started query request with params: {request.params}") 
   if "query" in request.params:
     query_param = request.params.get("query")
     save_data_file_from_gcs('dadgpt', 'data.txt')
@@ -30,6 +30,7 @@ def query():
 
 @post('/append')
 def append():
+  log.info(f"Started append request with params: {request.json}") 
   if "text" in request.json:
     text = request.json["text"]
     append_text_to_file_in_gcs('dadgpt', 'data.txt', text)
