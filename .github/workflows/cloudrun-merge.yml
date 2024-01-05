@@ -37,4 +37,4 @@ jobs:
           image: 'gcr.io/dadgpt/dadgpt'
           service: 'dadgpt'
           region: 'me-west1'
-          env_vars: OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}"
+          env_vars: OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
