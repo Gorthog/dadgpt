@@ -10,6 +10,7 @@ load_dotenv()
 
 @get('/')
 def query():
+  print("Open api key: " + os.environ.get('OPENAI_API_KEY'))
   if "query" in request.params:
     query_param = request.params.get("query")
     save_data_file_from_gcs('dadgpt', 'data.txt')
@@ -54,5 +55,5 @@ def get_data_from_blob(bucket_name, blob_name):
 app = app()
 app.install(cors_plugin('*'))
 
-port = int(os.environ.get('PORT', 3000))
+port = int(os.environ.get('PORT', 4000))
 run(host='0.0.0.0', port=port, debug=True)
