@@ -16,7 +16,6 @@ export function Append() {
 
   const handleClick = (e: Event) => {
     e.preventDefault();
-    console.log(refText?.value)
     setText(refText?.value || "");
   };
 

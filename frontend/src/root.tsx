@@ -12,17 +12,19 @@ import {
   Scripts,
   Title,
 } from "solid-start";
-import "./root.css";
+import NavBar from "./components/NavBar";
+import styles from "./root.module.css";
 
 export default function Root() {
   return (
     <Html lang="en">
       <Head>
-        <Title>SolidStart - Bare</Title>
+        <Title class={styles.caption}>DadGPT</Title>
         <Meta charset="utf-8" />
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Body>
+      <Body class={styles.body}>
+        <h1 class={styles.caption}>DadGPT</h1>
         <Suspense>
           <ErrorBoundary>
             <Routes>
@@ -30,6 +32,7 @@ export default function Root() {
             </Routes>
           </ErrorBoundary>
         </Suspense>
+        <NavBar />
         <Scripts />
       </Body>
     </Html>
