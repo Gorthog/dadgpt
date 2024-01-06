@@ -14,7 +14,6 @@
 .searchInput {
   grid-area: searchInput;
   width: 100%;
-  height: 35px; 
   padding: 3px 10px; 
   font-size: 16px; 
   border-radius: 20px; 
@@ -23,7 +22,6 @@
 .searchButton {
   grid-area: searchButton;
   width: 120px; 
-  height: 36px; 
   font-size: 14px;
 }
 

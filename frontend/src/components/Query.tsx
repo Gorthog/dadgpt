@@ -1,8 +1,10 @@
 import { createSignal, createResource } from "solid-js";
+import TextField from "@suid/material/TextField";
+import Button from "@suid/material/Button"
 import styles from "./Query.module.css"
 
 export function Query() {
-  let refQuery: HTMLInputElement | undefined;
+  let refQuery: HTMLDivElement | undefined;
 
   const [query, setQuery] = createSignal<string>();
 
@@ -12,15 +14,19 @@ export function Query() {
 
   const handleClick = (e: Event) => {
     e.preventDefault();
-    console.log(refQuery?.value)
-    setQuery(refQuery?.value || "");
+    setQuery((refQuery?.querySelector('#search-textarea') as HTMLTextAreaElement).value || "");
   };
 
   return (
     <form onSubmit={handleClick}>
       <div class={styles.container}>
-        <input class={styles.searchInput} ref={refQuery} type="text" style="" />
-        <button class={styles.searchButton} type="submit">Search</button>
+        <TextField class={styles.searchInput}
+          id="search-textarea"
+          ref={refQuery}
+          multiline
+          maxRows={5}
+        />
+        <Button class={styles.searchButton} variant="contained" type="submit">Search</Button>
         <div class={styles.searchResult} >{response.loading ? "Loading..." : response()}</div>
       </div>
     </form>
