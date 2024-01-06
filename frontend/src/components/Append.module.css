@@ -5,25 +5,25 @@
   width: 100%; 
   grid-row-gap: 20px; 
   grid-template-columns: minmax(30px, 1fr) minmax(auto, 600px) minmax(30px, 1fr);
-  grid-template-areas: ".   searchInput      ."
-                       ".   searchButton     ."
-                       ".   searchResult     .";
+  grid-template-areas: ".   appendInput      ."
+                       ".   appendButton     ."
+                       ".   appendResult     .";
                       
 }
 
-.searchInput {
-  grid-area: searchInput;
+.appendInput {
+  grid-area: appendInput;
   width: 100%;
   font-size: 16px; 
   border-radius: 20px; 
 }
 
-.searchButton {
-  grid-area: searchButton;
+.appendButton {
+  grid-area: appendButton;
   width: 120px; 
   font-size: 14px;
 }
 
-.searchResult {
-  grid-area: searchResult;
+.appendResult {
+  grid-area: appendResult;
 }

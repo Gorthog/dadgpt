@@ -1,9 +1,14 @@
 import { createSignal, createResource } from "solid-js";
+import TextField from "@suid/material/TextField";
+import Button from "@suid/material/Button"
+import styles from "./Append.module.css"
+import { getTextareaValue } from "~/common/utils";
 
 export function Append() {
-  let refText: HTMLInputElement | undefined;
+  let refText: HTMLDivElement | undefined;
 
   const [text, setText] = createSignal<string>();
+  const [disabled, setDisabled] = createSignal<boolean>(true);
 
   const [response] = createResource(text, async (text: string) =>
     await fetch(`https://dadgpt-dbfrvs4mzq-zf.a.run.app/append`, {
@@ -16,14 +21,22 @@ export function Append() {
 
   const handleClick = (e: Event) => {
     e.preventDefault();
-    setText(refText?.value || "");
+    setText(getTextareaValue(refText, "#append-textarea"));
   };
 
   return (
     <form onSubmit={handleClick}>
-      <input ref={refText} type="text" />
-      <button type="submit">Add</button>
-      <div>{response.loading ? "Loading..." : ""}</div>
+      <div class={styles.container}>
+        <TextField class={styles.appendInput}
+          id="append-textarea"
+          ref={refText}
+          multiline
+          maxRows={5}
+          onChange={(e) => { setDisabled(!e.target.value) }}
+        />
+        <Button class={styles.appendButton} variant="contained" type="submit" disabled={disabled()}>Add</Button>
+        <div class={styles.appendResult}>{response.loading ? "Loading..." : ""}</div>
+      </div>
     </form>
   );
 }

@@ -2,6 +2,7 @@ import { createSignal, createResource } from "solid-js";
 import TextField from "@suid/material/TextField";
 import Button from "@suid/material/Button"
 import styles from "./Query.module.css"
+import { getTextareaValue } from "~/common/utils";
 
 export function Query() {
   let refQuery: HTMLDivElement | undefined;
@@ -13,14 +14,9 @@ export function Query() {
     (await (await fetch(`https://dadgpt-dbfrvs4mzq-zf.a.run.app?query=${q}`)).json()).data
   );
 
-  const getTextareaValue = (textarea: HTMLDivElement | undefined) => {
-    // ref and inputRef to TextField didn't work. this is a workaround
-    return (textarea?.querySelector('#search-textarea') as HTMLTextAreaElement).value || "";
-  }
-
   const handleClick = (e: Event) => {
     e.preventDefault();
-    setQuery(getTextareaValue(refQuery));
+    setQuery(getTextareaValue(refQuery, "#search-textarea"));
   };
 
   return (
