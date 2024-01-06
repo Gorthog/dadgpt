@@ -9,14 +9,18 @@ export function Append() {
 
   const [text, setText] = createSignal<string>();
   const [disabled, setDisabled] = createSignal<boolean>(true);
+  const [message, setMessage] = createSignal<string>("");
 
-  const [response] = createResource(text, async (text: string) =>
+  const [response] = createResource(text, async (text: string) => {
     await fetch(`https://dadgpt-dbfrvs4mzq-zf.a.run.app/append`, {
       method: 'POST', headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ text })
-    })
+    });
+    setDisabled(true);
+    setMessage("Added!");
+  }
   );
 
   const handleClick = (e: Event) => {
@@ -35,7 +39,7 @@ export function Append() {
           onChange={(e) => { setDisabled(!e.target.value) }}
         />
         <Button class={styles.appendButton} variant="contained" type="submit" disabled={disabled()}>Add</Button>
-        <div class={styles.appendResult}>{response.loading ? "Loading..." : ""}</div>
+        <div class={styles.appendResult}>{response.loading ? "Loading..." : message()}</div>
       </div>
     </form>
   );
