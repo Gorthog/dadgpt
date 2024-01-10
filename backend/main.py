@@ -1,5 +1,5 @@
 import os
-from langchain.document_loaders import TextLoader
+from langchain_community.document_loaders import TextLoader
 from langchain.indexes import VectorstoreIndexCreator
 from dotenv import load_dotenv
 from bottle import run, request, post, get, app
