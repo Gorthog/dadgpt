@@ -19,7 +19,7 @@ def query():
   if "query" in request.params:
     query_param = request.params.query
     save_data_file_from_gcs('dadgpt', 'data.txt')
-    loader = TextLoader('./data.txt', autodetect_encoding=True)
+    loader = TextLoader('./data.txt', encoding='utf-8')
     index = VectorstoreIndexCreator().from_loaders([loader])
     result = index.query(query_param, retriever_kwargs={"search_kwargs": {"k": 1}})
     return { "data": result.strip() }
@@ -55,6 +55,10 @@ def get_data_from_blob(bucket_name: str, blob_name: str):
   client = storage.Client()
   bucket = client.get_bucket(bucket_name)
   blob = bucket.blob(blob_name)
+  
+  if not blob.exists():
+    return blob, ""
+  
   existing_data = blob.download_as_text()
   return blob, existing_data
 
