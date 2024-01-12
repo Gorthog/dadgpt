@@ -17,9 +17,9 @@ logging_client.setup_logging()
 def query():
   log.info(f"Started query request with params: {request.params}") 
   if "query" in request.params:
-    query_param = request.params.get("query")
+    query_param = request.params.query
     save_data_file_from_gcs('dadgpt', 'data.txt')
-    loader = TextLoader('./data.txt')
+    loader = TextLoader('./data.txt', autodetect_encoding=True)
     index = VectorstoreIndexCreator().from_loaders([loader])
     result = index.query(query_param, retriever_kwargs={"search_kwargs": {"k": 1}})
     return { "data": result.strip() }
@@ -43,7 +43,7 @@ def save_data_file_from_gcs(bucket_name, blob_name):
   if os.path.exists('data.txt'):
       os.remove('data.txt')
 
-  with open('data.txt', 'w') as file:
+  with open('data.txt', 'w', encoding='utf-8') as file:
     file.write(existing_data)
 
 def append_text_to_file_in_gcs(bucket_name, blob_name, text):
@@ -51,12 +51,12 @@ def append_text_to_file_in_gcs(bucket_name, blob_name, text):
   new_data = existing_data + '\n' + text + '\n'
   blob.upload_from_string(new_data)
 
-def get_data_from_blob(bucket_name, blob_name):
+def get_data_from_blob(bucket_name: str, blob_name: str):
   client = storage.Client()
   bucket = client.get_bucket(bucket_name)
   blob = bucket.blob(blob_name)
   existing_data = blob.download_as_text()
-  return blob,existing_data
+  return blob, existing_data
 
 app = app()
 app.install(cors_plugin('*'))
