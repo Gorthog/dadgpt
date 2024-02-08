@@ -21,7 +21,7 @@ def query():
     save_data_file_from_gcs('dadgpt', 'data.txt')
     loader = TextLoader('./data.txt', encoding='utf-8')
     index = VectorstoreIndexCreator().from_loaders([loader])
-    result = index.query(query_param, retriever_kwargs={"search_kwargs": {"k": 1}})
+    result = index.query(query_param)
     return { "data": result.strip() }
   else:
     return { "error": "query parameter is empty."}

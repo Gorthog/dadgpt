@@ -11,11 +11,11 @@ export function Query() {
   const [disabled, setDisabled] = createSignal<boolean>(true);
 
   const [response] = createResource(query, async (q) =>
-    (await (await fetch(`https://dadgpt-dbfrvs4mzq-zf.a.run.app?query=${q}`)).json()).data
+    (await (await fetch(`${import.meta.env.VITE_SERVER_HOST}?query=${q}`)).json()).data
   );
 
   const handleClick = (e: Event) => {
-    e.preventDefault();
+    e.preventDefault(); 
     setQuery(getTextareaValue(refQuery, "#search-textarea"));
   };
 
